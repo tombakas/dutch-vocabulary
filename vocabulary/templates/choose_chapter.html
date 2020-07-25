@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block body %}
+  {% include "home_icon.html" %}
+  <div class="centered-block">
+    <h2><span class="capitalize">{{ section | replace("ds", "d")}}</span> chapter</h2>
+    {% for chapter in chapters %}
+      <a 
+        href="{{ section }}/{{ chapter }}" 
+        class="link-button">{{ chapter | title | replace("_", " ")}}
+      </a>
+    {% endfor %}
+  </div>
+{% endblock body %}

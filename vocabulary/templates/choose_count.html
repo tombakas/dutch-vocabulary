@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+  {% include "home_icon.html" %}
+  <div class="centered-block">
+    <h2>Flashcard count</h2>
+    {% for count in counts %}
+      <a 
+        href="{{ activity }}/{{ chapter }}/count" 
+        class="link-button">{{ count | title }}
+      </a>
+    {% endfor %}
+  </div>
+{% endblock body %}

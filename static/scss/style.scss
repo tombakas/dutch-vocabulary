@@ -1,0 +1,119 @@
+@import "_nord";
+@import "_variables";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: $nord5;
+  font-family: "Arial", sans-serif;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.home-button {
+  width: 10px;
+  height: 10px;
+  background-color: $nord3;
+  fill: $nord3;
+  padding: 5px;
+  cursor: pointer;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  transition: 0.2s;
+
+  &:hover {
+    width: 50px;
+    height: 50px;
+    fill: $nord5;
+  }
+}
+
+.centered-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.centered-block-auto-margin {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  & > * {
+    margin: auto;
+  }
+}
+
+.link-button {
+  max-width: $element-width;
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+
+  padding: 10px;
+  margin: 1px;
+
+  font-weight: bold;
+  font-size: 1.2em;
+  color: $nord6;
+
+  background-color: $nord2;
+  cursor: pointer;
+
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $nord3;
+  }
+}
+
+@media (min-width: 500px) {
+  .entries {
+    column-count: 1;
+  }
+}
+
+@media (min-width: 800px) {
+  .entries {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1200px) {
+  .entries {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 1600px) {
+  .entries {
+    column-count: 4;
+  }
+}
+
+.entries {
+  padding: 20px;
+  .entry {
+    color: $nord1;
+    .dutch {
+      font-weight: bold;
+    }
+  }
+}

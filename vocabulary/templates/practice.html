@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+  {% include "home_icon.html" %}
+  <div class="centered-block-auto-margin">
+  <div class="entries">
+    {% for entry in entries %}
+      <article class="entry">
+        <span class="dutch">{{ entry[0] }}: </span>
+        <span class="english">{{ entry[1] }}</span>
+      </article>
+    {% endfor %}
+  </div>
+  </div>
+{% endblock body %}

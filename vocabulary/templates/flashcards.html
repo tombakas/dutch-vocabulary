@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/mithril/mithril.min.js"></script>
+{% endblock scripts %}
+
+{% block body %}
+  {% include "home_icon.html" %}
+  <div class="centered-block-auto-margin">
+    <div class="flashcard">
+    </div>
+  </div>
+{% endblock body %}
+
+{% block body_scripts %}
+  <script>
+    var flashcards = JSON.parse('{{ flashcards | tojson | safe }}')
+  </script>
+  {% assets "js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+{% endblock body_scripts %}

@@ -1,10 +1,12 @@
-from itertools import chain
-
 from flask import Blueprint
 from flask import render_template
 from flask import request
 
-from vocabulary.utils import load_data
+from vocabulary.utils import (
+    load_data,
+    combine_all_chapters,
+    get_flashcards
+)
 from vocabulary.constants import COUNTS
 
 
@@ -41,25 +43,31 @@ def chapter_choice():
 
 @routes.route('/flashcards/<string:chapter>')
 def count_choice(chapter):
-    activity = request.path.split("/")[0]
     return render_template(
         "choose_count.html",
         chapter=chapter,
-        activity=activity,
         counts=COUNTS
+    )
+
+
+@routes.route('/flashcards/<string:chapter>/<string:count>')
+def flashcards(chapter, count):
+    flashcards = get_flashcards(chapter, count, data)
+    return render_template(
+        "flashcards.html",
+        flashcards=flashcards
     )
 
 
 @routes.route('/practice/<string:chapter>/')
 def practice(chapter):
     if chapter == "all":
-        entries = chain.from_iterable(
-            list(data.values())
-        )
-        entries = sorted(entries, key=lambda x: x[0].lower())
+        entries = combine_all_chapters(data)
     else:
         entries = data.get(chapter)
 
+    if entries is None:
+        return render_template("nope.html")
     return render_template(
         "practice.html",
         entries=entries

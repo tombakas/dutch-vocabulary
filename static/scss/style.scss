@@ -117,3 +117,119 @@ body {
     }
   }
 }
+
+.flashcard {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 200px;
+
+  border: 2px solid $nord3;
+  position: relative;
+
+  .definition {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 2;
+    font-size: 1.2em;
+
+    height: 80px;
+    background-color: $nord3;
+    font-weight: bold;
+    color: white;
+
+  }
+
+  input {
+    text-align: center;
+    border: none;
+    background-color: white;
+    color: $nord3;
+    border: solid 3px white;
+    height: 40px;
+
+     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+
+    &:focus {
+      border: 3px solid $nord8;
+    }
+  }
+
+  button {
+    background-color: $nord4;
+    font-weight: bold;
+    height: 40px;
+    border: none;
+    transition: background-color 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $nord5;
+    }
+  }
+
+  span.counter {
+    position: absolute;
+    font-size: 0.8em;
+    left: 0;
+    top: 0;
+    color: $nord4;
+    margin: 5px;
+  }
+}
+
+.score {
+  color: $nord3;
+  width: 400px;
+
+  h1 {
+    text-align: center;
+  }
+
+  .answer-headers {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    
+    span {
+      width: 33%;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
+  .answer-entry {
+    display: flex;
+    justify-content: space-around;
+
+
+    span {
+      width: 33%;
+      text-align: center;
+    }
+  }
+}
+
+@mixin answer-styling($color) {
+  border: 2px solid $color;
+
+  .definition {
+    background-color: $color;
+  }
+}
+
+.correct-box {
+  @include answer-styling($nord14);
+}
+
+.almost-box {
+  @include answer-styling($nord12)
+}
+
+.wrong-box {
+  @include answer-styling($nord11)
+}

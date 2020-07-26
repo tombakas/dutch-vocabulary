@@ -16,24 +16,42 @@ body {
   text-transform: capitalize;
 }
 
-.home-button {
-  width: 10px;
-  height: 10px;
-  background-color: $nord3;
-  fill: $nord3;
-  padding: 5px;
-  cursor: pointer;
+@media not screen and (max-device-width: 800px) {
+  .home-button {
+    width: 10px;
+    height: 10px;
+    background-color: $nord3;
+    fill: $nord3;
+    padding: 5px;
+    cursor: pointer;
 
-  position: fixed;
-  left: 0;
-  top: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
 
-  transition: 0.2s;
+    transition: 0.2s;
 
-  &:hover {
-    width: 50px;
-    height: 50px;
+    &:hover {
+      width: 50px;
+      height: 50px;
+      fill: $nord5;
+    }
+  }
+}
+
+@media screen and (max-device-width: 800px) {
+  .home-button {
+    width: 80px;
+    height: 80px;
+    background-color: $nord3;
     fill: $nord5;
+    padding: 5px;
+    cursor: pointer;
+    opacity: 0.4;
+
+    position: fixed;
+    right: 0;
+    top: 0;
   }
 }
 
@@ -62,7 +80,11 @@ body {
 }
 
 .link-button {
-  max-width: $element-width;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  max-width: 50vw;
   width: 100%;
   text-decoration: none;
   text-align: center;
@@ -81,6 +103,18 @@ body {
 
   &:hover {
     background-color: $nord3;
+  }
+}
+
+@media screen and (max-device-width: 800px) {
+  .link-button {
+    max-width: 80vw;
+    height: 100px;
+    font-size: 3em;
+  }
+
+  h2 {
+    font-size: 4.5em;
   }
 }
 
@@ -105,6 +139,13 @@ body {
 @media (min-width: 1600px) {
   .entries {
     column-count: 4;
+  }
+}
+
+@media screen and (max-device-width: 800px) {
+  .entries {
+    column-count: 2;
+    font-size: 1.5em;
   }
 }
 
@@ -182,7 +223,28 @@ body {
   }
 }
 
+@media screen and (max-device-width: 800px) {
+  .flashcard {
+    width: 100%;
+    height: 50vw;
+    font-size: 2.2em;
+
+    input {
+      height: 10vw;
+      font-size: 1.5em;
+    }
+
+    button {
+      font-size: 1.2em;
+      height: 10vw;
+    }
+  }
+}
+
 .score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: $nord3;
   width: 400px;
 
@@ -190,15 +252,21 @@ body {
     text-align: center;
   }
 
+  .answer-list {
+   width: 100%;
+  }
   .answer-headers {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
     
     span {
-      width: 33%;
+      width: 30%;
       text-align: center;
       font-weight: bold;
+    }
+    span.points {
+      width: 10%;
     }
   }
 
@@ -208,8 +276,42 @@ body {
 
 
     span {
-      width: 33%;
+      width: 30%;
       text-align: center;
+    }
+    span.points {
+      width: 10%;
+    }
+  }
+
+  .retry-button {
+    background-color: $nord2;
+    text-decoration: none;
+    font-weight: bold;
+    color: $nord5;
+    margin-top: 40px;
+    padding: 5px 20px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: $nord3;
+    }
+  }
+}
+
+@media screen and (max-device-width: 800px) {
+  .score {
+    width: 90vw;
+    font-size: 1.7em;
+
+    .retry-button {
+      background-color: $nord2;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.5em;
+      color: $nord5;
+      margin-top: 200px;
+      padding: 20px 80px;
     }
   }
 }

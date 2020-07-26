@@ -11,7 +11,7 @@ css = Bundle(
 
 js = Bundle(
     "js/src/flashcards.js", "js/src/js-levenshtein.js",
-    # filters="jsmin",
+    filters="jsmin",
     output='js/bundle.js',
     depends="**/*.js"
 )

@@ -21,25 +21,34 @@ var score = {
   view: function(vnode) {
     let answerList = [
       m("div", {class: "answer-headers"}, [
+        m("span", "Definition"),
         m("span", "Submitted"),
         m("span", "Actual"),
-        m("span", "Points")
+        m("span", {class: "points"}, "Points")
       ])
     ]
 
+    let i = 0
     for (let answer of answers) {
       answerList.push(
         m("div", {class: "answer-entry"}, [
+          m("span", {class: "definition"}, flashcards[i].translation),
           m("span", {class: "submitted"}, answer.submitted),
           m("span", {class: "actual"}, answer.actual),
           m("span", {class: "points"}, levenshteinToScore(answer.levenshtein)),
         ])
       )
+      i++
     }
 
     return m("div", {class: "score"}, [
       m("h1", `Score:\xa0${computeScore()}%`),
-      m("div", {class: "answer-list"}, answerList)
+      m("div", {class: "answer-list"}, answerList),
+      m("a", {
+        class: "retry-button", 
+        href: "#",
+        id: "retry",
+      }, "Retry")
     ])
   }
 }
@@ -113,6 +122,7 @@ function renderCard() {
 function renderScore() {
   flashcardRoot.classList = []
   m.mount(flashcardRoot, score)
+  document.getElementById("retry").onclick = () => window.location.reload(true)
 }
 
 function computeScore() {

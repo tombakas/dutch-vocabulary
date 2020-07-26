@@ -11,7 +11,7 @@ from vocabulary.constants import PATH_TO_VOCAB
 
 
 def load_data():
-    with open(PATH_TO_VOCAB) as f:
+    with open(PATH_TO_VOCAB, encoding="utf-8") as f:
         reader = csv.reader(f, delimiter=";")
         dictionary = defaultdict(list)
         for line in reader:
@@ -37,9 +37,16 @@ def get_flashcards(chapter, count, data):
         # Normalize potential answers by removing parts in brackets,
         # like "(e)" and extra space
         for item in entry[0].split("/"):
-            item = re.sub("\([a-zA-Z]+\)","",item) # noqa
+            bracket_text = item[item.find("(")+1:item.find(")")]
+
+            item = re.sub("\([\w -]+\)","",item) # noqa
             item = item.strip()
+
             flash_card["answers"].append(item)
+            if "-" in bracket_text:
+                flash_card["answers"].append(bracket_text.replace("-", item))
+            elif bracket_text == "e":
+                flash_card["answers"].append(item + "e")
 
             # If the word comes with an article, move it in front
             # as one of the answers

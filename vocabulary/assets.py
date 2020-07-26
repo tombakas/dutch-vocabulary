@@ -10,9 +10,10 @@ css = Bundle(
 )
 
 js = Bundle(
-    "js/src/flashcards.js",
+    "js/src/flashcards.js", "js/src/js-levenshtein.js",
     # filters="jsmin",
     output='js/bundle.js',
+    depends="**/*.js"
 )
 
 assets.register("css", css)

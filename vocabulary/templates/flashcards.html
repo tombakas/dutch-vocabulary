@@ -17,6 +17,6 @@
     var flashcards = JSON.parse('{{ flashcards | tojson | safe }}')
   </script>
   {% assets "js" %}
-    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    <script type="module" src="{{ ASSET_URL }}"></script>
   {% endassets %}
 {% endblock body_scripts %}

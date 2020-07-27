@@ -306,6 +306,18 @@ body {
   }
 }
 
+.correct {
+  color: $nord14;
+}
+
+.almost {
+  color: $nord12;
+}
+
+.wrong {
+  color: $nord11;
+}
+
 @media screen and (max-device-width: 800px) {
   .score {
     width: 90vw;

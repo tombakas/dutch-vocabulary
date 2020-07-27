@@ -19,7 +19,16 @@ var flashcard = {
 
 var score = {
   view: function(vnode) {
-    let answerList = [
+    var getAnswerClass = function(answerScore) {
+      var classes = ["answer-entry"]
+      if (answerScore == 0.5) {
+        classes.push("almost")
+      } else if (answerScore == 0){
+        classes.push("wrong")
+      }
+      return classes.join(" ")
+    }
+    var answerList = [
       m("div", {class: "answer-headers"}, [
         m("span", "Definition"),
         m("span", "Submitted"),
@@ -28,14 +37,15 @@ var score = {
       ])
     ]
 
-    let i = 0
+    var i = 0
     for (let answer of answers) {
+      var answerScore = levenshteinToScore(answer.levenshtein)
       answerList.push(
-        m("div", {class: "answer-entry"}, [
+        m("div", {class: getAnswerClass(answerScore)}, [
           m("span", {class: "english"}, flashcards[i].english),
           m("span", {class: "submitted"}, answer.submitted),
           m("span", {class: "actual"}, answer.actual),
-          m("span", {class: "points"}, levenshteinToScore(answer.levenshtein)),
+          m("span", {class: "points"}, answerScore),
         ])
       )
       i++

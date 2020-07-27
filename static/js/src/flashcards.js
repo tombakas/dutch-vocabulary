@@ -5,7 +5,7 @@ var answers = []
 var flashcard = {
   view: function(vnode) {
     return [
-      m("div", {class: "definition"}, vnode.attrs.translation),
+      m("div", {class: "english"}, vnode.attrs.english),
       m("input", {
         autofocus: "autofocus", 
         onkeypress: handleKeypress,
@@ -32,7 +32,7 @@ var score = {
     for (let answer of answers) {
       answerList.push(
         m("div", {class: "answer-entry"}, [
-          m("span", {class: "definition"}, flashcards[i].translation),
+          m("span", {class: "english"}, flashcards[i].english),
           m("span", {class: "submitted"}, answer.submitted),
           m("span", {class: "actual"}, answer.actual),
           m("span", {class: "points"}, levenshteinToScore(answer.levenshtein)),
@@ -73,14 +73,18 @@ function handleSubmission() {
   var inputBox = document.getElementById("word-input")
   var levenshteins = []
   for (let answer of flashcards[currentFlashcard]["answers"]) {
-    levenshteins.push(levenshtein(inputBox.value.toLowerCase(), answer.toLowerCase()))
+    levenshteins.push(
+      levenshtein(
+        inputBox.value.toLowerCase().trim(),
+        answer.toLowerCase().trim())
+    )
   }
 
   var answerWorth = Math.min(...levenshteins)
 
   answers.push({
     submitted: inputBox.value,
-    actual: flashcards[currentFlashcard]["definition"],
+    actual: flashcards[currentFlashcard]["dutch"],
     levenshtein: answerWorth
   })
 

@@ -4,6 +4,7 @@ from flask import request
 
 from vocabulary.utils import (
     load_data,
+    extract_single_chapter,
     combine_all_chapters,
     get_flashcards
 )
@@ -64,7 +65,7 @@ def practice(chapter):
     if chapter == "all":
         entries = combine_all_chapters(data)
     else:
-        entries = data.get(chapter)
+        entries = extract_single_chapter(data, chapter)
 
     if entries is None:
         return render_template("nope.html")

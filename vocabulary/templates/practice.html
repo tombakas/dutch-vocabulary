@@ -8,7 +8,14 @@
     {% for entry in entries %}
       <article class="entry">
         <span class="dutch">{{ entry[0] }}: </span>
-        <span class="english">{{ entry[1] }}</span>
+        <span class="english">
+          {% for i in entry[1]  %}
+            {{ i }} 
+            {% if not loop.last %}
+              /
+            {% endif %}
+          {% endfor %}
+        </span>
       </article>
     {% endfor %}
   </div>

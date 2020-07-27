@@ -24,7 +24,10 @@ def load_data():
 
 def get_flashcards(chapter, count, data):
     if count == "all":
-        entries = combine_all_chapters(data, sort=False)
+        if chapter == "all":
+            entries = combine_all_chapters(data, sort=False)
+        else:
+            entries = extract_single_chapter(data, chapter)
         shuffle(entries)
     else:
         entries = sample(

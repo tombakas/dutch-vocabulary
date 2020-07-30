@@ -1,23 +1,29 @@
 {% extends "base.html" %}
 
+{% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/mithril/mithril.min.js"></script>
+{% endblock scripts %}
 
 {% block body %}
   {% include "home_icon.html" %}
   <div class="centered-block-auto-margin">
-  <div class="entries">
-    {% for entry in entries %}
-      <article class="entry">
-        <span class="dutch">{{ entry[0] }}: </span>
-        <span class="english">
-          {% for i in entry[1]  %}
-            {{ i }} 
-            {% if not loop.last %}
-              /
-            {% endif %}
-          {% endfor %}
-        </span>
-      </article>
-    {% endfor %}
-  </div>
+    <div class="entry-container">
+      {% include "reverse_icon.html" %}
+      <div class="entries">
+        {% for entry in entries %}
+          <article class="entry">
+          </article>
+        {% endfor %}
+      </div>
+    </div>
   </div>
 {% endblock body %}
+
+{% block body_scripts %}
+  <script>
+    var entries = JSON.parse('{{ entries | tojson | safe }}')
+  </script>
+  {% assets "practice" %}
+  <script type="module" src="{{ ASSET_URL }}"></script>
+  {% endassets %}
+{% endblock body_scripts %}

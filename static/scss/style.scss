@@ -156,13 +156,39 @@ body {
   }
 }
 
+.entry-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .entries {
   padding: 20px;
   .entry {
     color: $nord1;
-    .dutch {
+    .from-language {
       font-weight: bold;
     }
+  }
+}
+
+.reverse-button {
+  height: 50px;
+  width: 50px;
+  fill: $nord3;
+  transition: opacity 0.2s;
+  opacity: 0.4;
+
+  &:hover {
+  opacity: 1;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-device-width: 800px) {
+  .reverse-button {
+    width: 80px;
+    height: 80px;
   }
 }
 
@@ -291,12 +317,19 @@ body {
     }
   }
 
+  .score-buttons {
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+  }
+
   .retry-button {
     background-color: $nord2;
     text-decoration: none;
     font-weight: bold;
     color: $nord5;
     margin-top: 40px;
+    margin-right: 20px;
     padding: 5px 20px;
     transition: background-color 0.2s;
 
@@ -323,13 +356,24 @@ body {
     width: 90vw;
     font-size: 1.7em;
 
+    .shortcut {
+      display: none;
+    }
+
+    .score-buttons {
+      text-align: center;
+      padding-top: 100px;
+      display: flex;
+      flex-direction: column;
+    }
+
     .retry-button {
       background-color: $nord2;
       text-decoration: none;
       font-weight: bold;
       font-size: 1.5em;
       color: $nord5;
-      margin-top: 200px;
+      margin-top: 10px;
       padding: 20px 80px;
     }
   }

@@ -10,7 +10,7 @@ from vocabulary.constants import PATH_TO_VOCAB
 
 
 def load_data():
-    with open(PATH_TO_VOCAB, encoding="utf-8") as f:
+    with open(PATH_TO_VOCAB, "rt", encoding="utf-8") as f:
         reader = csv.reader(f, delimiter=";")
         dictionary = defaultdict(lambda: defaultdict(list))
         for line in reader:

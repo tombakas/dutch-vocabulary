@@ -1,6 +1,14 @@
 var flashcardRoot = document.getElementsByClassName("flashcard")[0]
-var currentFlashcard = 0
-var answers = []
+var currentFlashcard
+var answers
+var mistakes
+
+function initDocument() {
+  currentFlashcard = 0
+  answers = []
+  mistakes = false
+  document.removeEventListener('keyup', handleShortcut)
+}
 
 var flashcard = {
   view: function(vnode) {
@@ -54,11 +62,25 @@ var score = {
     return m("div", {class: "score"}, [
       m("h1", `Score:\xa0${computeScore()}%`),
       m("div", {class: "answer-list"}, answerList),
-      m("a", {
-        class: "retry-button", 
-        href: "#",
-        id: "retry",
-      }, "Retry")
+      m("div", {class: "score-buttons"}, [
+        m("a", {
+          class: "retry-button", 
+          href: "#",
+          id: "retry",
+        }, [
+          "Retry",
+          m("span", {class: "shortcut"}, " (r)")
+        ]),
+        m("a", {
+          class: "retry-button", 
+          hidden: !mistakes,
+          href: "#",
+          id: "retryIncorrect",
+        }, [
+          "Retry Incorrect",
+          m("span", {class: "shortcut"}, " (i)")
+        ])
+      ])
     ])
   }
 }
@@ -70,13 +92,16 @@ function handleKeypress(key) {
 }
 
 function levenshteinToScore(levenshteinValue) {
-  if (levenshteinValue == 0) {
-    return 1
-  } else if (levenshteinValue == 1) {
-    return 0.5
+  if (levenshteinValue > 0) {
+    mistakes = true
+    if (levenshteinValue == 1) {
+      return 0.5
+    }
+
+    return 0
   }
 
-  return 0
+  return 1
 }
 
 function handleSubmission() {
@@ -85,8 +110,15 @@ function handleSubmission() {
   for (let answer of flashcards[currentFlashcard]["answers"]) {
     levenshteins.push(
       levenshtein(
-        inputBox.value.toLowerCase().trim(),
-        answer.toLowerCase().trim())
+        inputBox.value
+          .toLowerCase()
+          .replace(/’/g, "'")
+          .trim(),
+        answer
+          .toLowerCase()
+          .replace(/’/g, "'")
+          .trim()
+      )
     )
   }
 
@@ -136,7 +168,34 @@ function renderCard() {
 function renderScore() {
   flashcardRoot.classList = []
   m.mount(flashcardRoot, score)
+
   document.getElementById("retry").onclick = () => window.location.reload(true)
+  document.getElementById("retryIncorrect").onclick = retryIncorrect
+  document.addEventListener('keyup', handleShortcut)
+}
+
+function retryIncorrect() {
+  var incorrectAnwers = []
+  var newFlashcards = []
+
+  for (let answer of answers) {
+    if (answer.levenshtein > 0) {
+      incorrectAnwers.push(answer)
+    }
+  }
+
+  for (let flashcard of flashcards) {
+    if(incorrectAnwers.find( (answer) => {
+      return answer.actual == flashcard.dutch
+    })) {
+      newFlashcards.push(flashcard)
+    }
+  }
+
+  flashcards = newFlashcards
+
+  initDocument()
+  renderCard()
 }
 
 function computeScore() {
@@ -145,8 +204,18 @@ function computeScore() {
     total += levenshteinToScore(answer.levenshtein)
   }
 
-  console.log(answers)
-  return total / flashcards.length * 100
+  return Math.round(total / flashcards.length * 100)
 }
 
+function handleShortcut(key) {
+  if (key.key == "r") {
+    window.location.reload(true)
+  }
+
+  if (key.key == "i") {
+    retryIncorrect()
+  }
+}
+
+initDocument()
 renderCard()

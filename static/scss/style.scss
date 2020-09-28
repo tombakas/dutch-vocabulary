@@ -12,6 +12,14 @@ body {
   font-family: "Arial", sans-serif;
 }
 
+.hide {
+  display: none;
+}
+
+.invisible {
+  opacity: 0;
+}
+
 .capitalize {
   text-transform: capitalize;
 }
@@ -172,7 +180,26 @@ body {
   }
 }
 
-.reverse-button {
+.entry:hover {
+  .to-language {
+    opacity: 1;
+  }
+}
+
+.to-language {
+  transition: 0.2s;
+}
+
+.control-icons {
+  display: flex;
+
+  div {
+    padding: 5px;
+  }
+
+}
+
+.reverse-button, .eye-open-button, .eye-closed-button {
   height: 50px;
   width: 50px;
   fill: $nord3;

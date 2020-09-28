@@ -8,7 +8,10 @@
   {% include "home_icon.html" %}
   <div class="centered-block-auto-margin">
     <div class="entry-container">
-      {% include "reverse_icon.html" %}
+      <div class="control-icons">
+        {% include "reverse_icon.html" %}
+        {% include "eye_icon.html" %}
+      </div>
       <div class="entries">
         {% for entry in entries %}
           <article class="entry">

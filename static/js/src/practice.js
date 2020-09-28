@@ -51,5 +51,16 @@ var flipDictionary = function() {
 }
 
 flipDictionary()
-
 document.getElementsByClassName("reverse-button")[0].onclick = flipDictionary
+
+Array.from(document.getElementsByClassName("eye-button")).forEach(function(element) {
+  element.addEventListener("click", () => {
+      document.getElementsByClassName("eye-closed-button")[0].classList.toggle("hide")
+      document.getElementsByClassName("eye-open-button")[0].classList.toggle("hide")
+
+      Array.from(document.getElementsByClassName("to-language")).forEach(function(element) {
+        console.log(element)
+        element.classList.toggle("invisible")
+      })
+  })
+})

@@ -30,9 +30,12 @@ def get_flashcards(chapter, count, data):
             entries = extract_single_chapter(data, chapter)
         shuffle(entries)
     else:
-        entries = sample(
-            extract_single_chapter(data, chapter), k=int(count)
-        )
+        if chapter == "all":
+            entries = sample(combine_all_chapters(data), k=int(count))
+        else:
+            entries = sample(
+                extract_single_chapter(data, chapter), k=int(count)
+            )
 
     flash_cards = []
 
@@ -44,7 +47,7 @@ def get_flashcards(chapter, count, data):
         answers = []
         bracket_text = item[item.find("(")+1:item.find(")")]
 
-        item = re.sub("\([\w -]+\)","",item) # noqa
+        item = re.sub("\([\w -]+\)", "", item)  # noqa
         item = item.strip()
 
         flash_card["answers"].append(item)
@@ -55,7 +58,7 @@ def get_flashcards(chapter, count, data):
 
         # If the word comes with an article, move it in front
         # as one of the answers
-        if re.search(",\ ?(de|het)", item): # noqa
+        if re.search(",\ ?(de|het)", item):  # noqa
             parts = item.split(",")
             item = " ".join([parts[1], parts[0]]).strip()
             answers.append(item)
@@ -82,6 +85,7 @@ def get_flashcards(chapter, count, data):
 
 def extract_single_chapter(data, chapter):
     return list(data[chapter].items())
+
 
 def combine_all_chapters(data, sort=True):
     entries = [

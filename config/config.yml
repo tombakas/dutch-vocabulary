@@ -1,0 +1,5 @@
+books:
+  part_1:
+    path: "config/data/part_1.csv"
+  part_2:
+    path: "config/data/part_2.csv"

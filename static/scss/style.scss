@@ -24,6 +24,15 @@ body {
   text-transform: capitalize;
 }
 
+.title {
+  font-weight: 400;
+  font-size: 36px;
+  padding: 0;
+  margin: -52px 0 16px 0;
+  line-height: 36px;
+  color: $nord1;
+}
+
 @media not screen and (max-device-width: 800px) {
   .home-button {
     width: 10px;

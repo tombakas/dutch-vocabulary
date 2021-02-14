@@ -9,7 +9,7 @@ run: $(FLASK)
 	FLASK_ENV=development $(PYTHON) ./app.py
 
 $(FLASK): $(VENV)
-	$(PIP) install -r requirements.txt
+	$(PIP) install -r config/requirements.txt
 
 $(VENV):
 	virtualenv -p python3 $(VENV)

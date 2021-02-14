@@ -3,7 +3,9 @@
 
 {% block body %}
   <div class="centered-block">
-    <a href="practice" class="link-button">Practice</a>
-    <a href="flashcards" class="link-button">Flashcards</a>
+    <h1 class="title">Book</h1>
+    {% for book in books  %}
+      <a href="{{ book }}/" class="link-button">{{ book | replace("_", " ") | title }}</a>
+    {% endfor %}
   </div>
 {% endblock body %}

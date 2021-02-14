@@ -6,19 +6,15 @@ from collections import defaultdict
 from random import sample
 from random import shuffle
 
-from vocabulary.constants import PATH_TO_VOCAB
 
-
-def load_data():
-    with open(PATH_TO_VOCAB, "rt", encoding="utf-8") as f:
+def load_data(path):
+    with open(path, "rt", encoding="utf-8") as f:
         reader = csv.reader(f, delimiter=";")
         dictionary = defaultdict(lambda: defaultdict(list))
         for line in reader:
-            dictionary[
-                "chapter_{}".format(line[2])
-            ][
-                line[1].strip()
-            ].extend([item.strip() for item in line[0].split("/")])
+            dictionary["chapter_{}".format(line[2].strip())][line[1].strip()].extend(
+                [item.strip() for item in line[0].split("/")]
+            )
         return dictionary
 
 
@@ -33,9 +29,7 @@ def get_flashcards(chapter, count, data):
         if chapter == "all":
             entries = sample(combine_all_chapters(data), k=int(count))
         else:
-            entries = sample(
-                extract_single_chapter(data, chapter), k=int(count)
-            )
+            entries = sample(extract_single_chapter(data, chapter), k=int(count))
 
     flash_cards = []
 
@@ -45,7 +39,7 @@ def get_flashcards(chapter, count, data):
         like "(e)" and extra space
         """
         answers = []
-        bracket_text = item[item.find("(")+1:item.find(")")]
+        bracket_text = item[item.find("(") + 1 : item.find(")")]
 
         item = re.sub("\([\w -]+\)", "", item)  # noqa
         item = item.strip()
@@ -66,11 +60,7 @@ def get_flashcards(chapter, count, data):
         return answers
 
     for entry in entries:
-        flash_card = {
-            "dutch": " / ".join(entry[1]),
-            "english": entry[0],
-            "answers": []
-        }
+        flash_card = {"dutch": " / ".join(entry[1]), "english": entry[0], "answers": []}
 
         for item in entry[1]:
             if "/" in item:
@@ -83,15 +73,20 @@ def get_flashcards(chapter, count, data):
     return flash_cards
 
 
+def get_chapters(book_data):
+    return sorted(book_data.keys(), key=lambda x: int(x.split("_")[1])) + ["all"]
+
+
 def extract_single_chapter(data, chapter):
     return list(data[chapter].items())
 
 
 def combine_all_chapters(data, sort=True):
     entries = [
-        item for sublist in [
-            list(i.items()) for i in list(data.values())
-        ] for item in sublist]
+        item
+        for sublist in [list(i.items()) for i in list(data.values())]
+        for item in sublist
+    ]
     if sort:
         return sorted(entries, key=lambda x: x[0].lower())
     return list(entries)

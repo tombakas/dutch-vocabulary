@@ -12,9 +12,14 @@ def load_data(path):
         reader = csv.reader(f, delimiter=";")
         dictionary = defaultdict(lambda: defaultdict(list))
         for line in reader:
-            dictionary["chapter_{}".format(line[2].strip())][line[1].strip()].extend(
-                [item.strip() for item in line[0].split("/")]
-            )
+            if len(line) > 2:
+                dictionary["chapter_{}".format(line[2].strip())][line[1].strip()].extend(
+                    [item.strip() for item in line[0].split("/")]
+                )
+            else:
+                dictionary["chapter_0"][line[1].strip()].extend(
+                    [item.strip() for item in line[0].split("/")]
+                )
         return dictionary
 
 
@@ -74,7 +79,10 @@ def get_flashcards(chapter, count, data):
 
 
 def get_chapters(book_data):
-    return sorted(book_data.keys(), key=lambda x: int(x.split("_")[1])) + ["all"]
+    chapters = book_data.keys()
+    # Remove chapter_0 as it's a placeholder for not having a chapter
+    chapters -= {"chapter_0"}
+    return sorted(chapters, key=lambda x: int(x.split("_")[1])) + ["all"]
 
 
 def extract_single_chapter(data, chapter):

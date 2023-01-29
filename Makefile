@@ -6,7 +6,7 @@ FLASK = $(BIN)/flask
 
 .PHONY: run
 run: $(FLASK)
-	FLASK_ENV=development $(PYTHON) ./app.py
+	FLASK_DEBUG=1 $(PYTHON) ./app.py
 
 $(FLASK): $(VENV)
 	$(PIP) install -r config/requirements.txt

@@ -39,7 +39,7 @@ def get_flashcards(chapter, count, data):
         like "(e)" and extra space
         """
         answers = []
-        bracket_text = item[item.find("(") + 1 : item.find(")")]
+        bracket_text = item[item.find("(") + 1: item.find(")")]
 
         item = re.sub("\([\w -]+\)", "", item)  # noqa
         item = item.strip()

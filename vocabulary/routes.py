@@ -16,10 +16,10 @@ routes = Blueprint('routes', __name__,
                    template_folder='templates')
 
 
-def chapter_list(section):
+def chapter_list(book, section):
     return render_template(
         "choose_chapter.html",
-        chapters=get_chapters(books["part_1"]),
+        chapters=get_chapters(books[book]),
         section=section
     )
 
@@ -38,8 +38,8 @@ def book_root(book):
 @routes.route('/<string:book>/practice')
 def chapter_choice(book):
     if "flashcards" in request.path:
-        return chapter_list("flashcards")
-    return chapter_list("practice")
+        return chapter_list(book, "flashcards")
+    return chapter_list(book, "practice")
 
 
 @routes.route('/<string:book>/flashcards/<string:chapter>/')
